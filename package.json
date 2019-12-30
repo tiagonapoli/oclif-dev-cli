@@ -20,7 +20,7 @@
   ],
   "main": "lib/index.js",
   "bin": {
-    "cli": "./bin/run"
+    "oclif-dev": "./bin/run"
   },
   "scripts": {
     "watch": "nodemon",
