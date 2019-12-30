@@ -49,7 +49,6 @@ USAGE
 * [`oclif-dev publish:macos`](#oclif-dev-publishmacos)
 * [`oclif-dev publish:win`](#oclif-dev-publishwin)
 * [`oclif-dev readme`](#oclif-dev-readme)
-* [`oclif-dev update [CHANNEL]`](#oclif-dev-update-channel)
 
 ## `oclif-dev help [COMMAND]`
 
@@ -226,15 +225,4 @@ DESCRIPTION
 ```
 
 _See code: [src/commands/readme.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/readme.ts)_
-
-## `oclif-dev update [CHANNEL]`
-
-update the oclif-dev CLI
-
-```
-USAGE
-  $ oclif-dev update [CHANNEL]
-```
-
-_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.9/src/commands/update.ts)_
 <!-- commandsstop -->
