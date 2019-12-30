@@ -95,11 +95,6 @@
       "@oclif/plugin-update",
       "@oclif/plugin-warn-if-update-available",
       "@tiagonapoli/oclif-plugin-spaced-commands"
-    ],
-    "topics": {
-      "say": {
-        "description": "Commands to say something"
-      }
-    }
+    ]
   }
 }
