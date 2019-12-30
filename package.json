@@ -1,11 +1,11 @@
 {
-  "name": "oclif-template",
-  "description": "oclif multi command, space separated cli",
+  "name": "@tiagonapoli/oclif-dev-cli",
+  "description": "CLI for development tasks when using OCLIF",
   "version": "0.0.1",
   "author": "tiagonapoli",
-  "homepage": "https://github.com/tiagonapoli/oclif-template",
-  "bugs": "https://github.com/tiagonapoli/oclif-template/issues",
-  "repository": "tiagonapoli/oclif-template",
+  "homepage": "https://github.com/tiagonapoli/oclif-dev-cli",
+  "bugs": "https://github.com/tiagonapoli/oclif-dev-cli/issues",
+  "repository": "tiagonapoli/oclif-dev-cli",
   "keywords": [
     "oclif"
   ],
@@ -84,11 +84,12 @@
     "prettier": "^1.19.1",
     "ts-jest": "^24.2.0",
     "ts-node": "^8.0.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.4",
+    "nodemon-notifier-cli": "https://github.com/Slessi/nodemon-notifier-cli.git"
   },
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "cli",
+    "bin": "oclif-dev",
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-update",

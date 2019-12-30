@@ -2,5 +2,8 @@
   "ignore": ["**/*.test.ts", ".git", "node_modules", "lib"],
   "watch": ["src", "package.json"],
   "exec": "yarn build",
-  "ext": "ts"
+  "ext": "ts",
+  "events": {
+    "crash": "yarn notify -t 'oclif-dev-cli: nodemon' -m 'build failed'"
+  }
 }

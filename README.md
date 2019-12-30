@@ -1,10 +1,10 @@
-oclif-template
+oclif-dev-cli
 ==============
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/oclif-template.svg)](https://npmjs.org/package/oclif-template)
-[![Downloads/week](https://img.shields.io/npm/dw/oclif-template.svg)](https://npmjs.org/package/oclif-template)
-[![License](https://img.shields.io/npm/l/oclif-template.svg)](https://github.com/tiagonapoli/oclif-template/blob/master/package.json)
+[![Version](https://img.shields.io/npm/v/oclif-dev-cli.svg)](https://npmjs.org/package/oclif-dev-cli)
+[![Downloads/week](https://img.shields.io/npm/dw/oclif-dev-cli.svg)](https://npmjs.org/package/oclif-dev-cli)
+[![License](https://img.shields.io/npm/l/oclif-dev-cli.svg)](https://github.com/tiagonapoli/oclif-dev-cli/blob/master/package.json)
 
 
 # Development
@@ -25,32 +25,39 @@ In MacOS you can add to the end of `~/.bash_profile` (if you use `bash`) the sam
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g oclif-template
-$ cli COMMAND
+$ npm install -g @tiagonapoli/oclif-dev-cli
+$ oclif-dev COMMAND
 running command...
-$ cli (-v|--version|version)
-oclif-template/0.0.1 linux-x64 node-v12.13.0
-$ cli --help [COMMAND]
+$ oclif-dev (-v|--version|version)
+@tiagonapoli/oclif-dev-cli/0.0.1 linux-x64 node-v12.13.0
+$ oclif-dev --help [COMMAND]
 USAGE
-  $ cli COMMAND
+  $ oclif-dev COMMAND
 ...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`cli help [COMMAND]`](#cli-help-command)
-* [`cli ls`](#cli-ls)
-* [`cli say:bye`](#cli-saybye)
-* [`cli say:hello [FILE]`](#cli-sayhello-file)
-* [`cli update [CHANNEL]`](#cli-update-channel)
+* [`oclif-dev help [COMMAND]`](#oclif-dev-help-command)
+* [`oclif-dev manifest [PATH]`](#oclif-dev-manifest-path)
+* [`oclif-dev pack`](#oclif-dev-pack)
+* [`oclif-dev pack:deb`](#oclif-dev-packdeb)
+* [`oclif-dev pack:macos`](#oclif-dev-packmacos)
+* [`oclif-dev pack:win`](#oclif-dev-packwin)
+* [`oclif-dev publish`](#oclif-dev-publish)
+* [`oclif-dev publish:deb`](#oclif-dev-publishdeb)
+* [`oclif-dev publish:macos`](#oclif-dev-publishmacos)
+* [`oclif-dev publish:win`](#oclif-dev-publishwin)
+* [`oclif-dev readme`](#oclif-dev-readme)
+* [`oclif-dev update [CHANNEL]`](#oclif-dev-update-channel)
 
-## `cli help [COMMAND]`
+## `oclif-dev help [COMMAND]`
 
-display help for cli
+display help for oclif-dev
 
 ```
 USAGE
-  $ cli help [COMMAND]
+  $ oclif-dev help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -61,63 +68,172 @@ OPTIONS
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.3/src/commands/help.ts)_
 
-## `cli ls`
+## `oclif-dev manifest [PATH]`
 
-List local files
-
-```
-USAGE
-  $ cli ls
-
-EXAMPLE
-  cli ls
-```
-
-_See code: [src/commands/ls.ts](https://github.com/tiagonapoli/oclif-template/blob/v0.0.1/src/commands/ls.ts)_
-
-## `cli say:bye`
-
-Say bye
+generates plugin manifest json
 
 ```
 USAGE
-  $ cli say:bye
+  $ oclif-dev manifest [PATH]
 
-EXAMPLE
-  cli say bye
+ARGUMENTS
+  PATH  [default: .] path to plugin
 ```
 
-_See code: [src/commands/say/bye.ts](https://github.com/tiagonapoli/oclif-template/blob/v0.0.1/src/commands/say/bye.ts)_
+_See code: [src/commands/manifest.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/manifest.ts)_
 
-## `cli say:hello [FILE]`
+## `oclif-dev pack`
 
-Say hello
+packages oclif cli into tarballs
 
 ```
 USAGE
-  $ cli say:hello [FILE]
+  $ oclif-dev pack
 
 OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  -r, --root=root        (required) [default: .] path to oclif CLI root
+  -t, --targets=targets  comma-separated targets to pack (e.g.: linux-arm,win32-x64)
+  --[no-]xz              also build xz
 
-EXAMPLES
-  cli say hello
-  cli say hello --name="tiago"
-  cli say hello -n tiago
-  cli say hello --force --file asdf.txt
+DESCRIPTION
+  This can be used to create oclif CLIs that use the system node or that come preloaded with a node binary.
 ```
 
-_See code: [src/commands/say/hello.ts](https://github.com/tiagonapoli/oclif-template/blob/v0.0.1/src/commands/say/hello.ts)_
+_See code: [src/commands/pack/index.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/pack/index.ts)_
 
-## `cli update [CHANNEL]`
+## `oclif-dev pack:deb`
 
-update the cli CLI
+pack CLI into debian package
 
 ```
 USAGE
-  $ cli update [CHANNEL]
+  $ oclif-dev pack:deb
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+```
+
+_See code: [src/commands/pack/deb.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/pack/deb.ts)_
+
+## `oclif-dev pack:macos`
+
+pack CLI into MacOS .pkg
+
+```
+USAGE
+  $ oclif-dev pack:macos
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+```
+
+_See code: [src/commands/pack/macos.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/pack/macos.ts)_
+
+## `oclif-dev pack:win`
+
+create windows installer from oclif CLI
+
+```
+USAGE
+  $ oclif-dev pack:win
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+```
+
+_See code: [src/commands/pack/win.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/pack/win.ts)_
+
+## `oclif-dev publish`
+
+publish an oclif CLI to S3
+
+```
+USAGE
+  $ oclif-dev publish
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+
+DESCRIPTION
+  "aws-sdk" will need to be installed as a devDependency to publish.
+```
+
+_See code: [src/commands/publish/index.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/publish/index.ts)_
+
+## `oclif-dev publish:deb`
+
+publish deb package built with pack:deb
+
+```
+USAGE
+  $ oclif-dev publish:deb
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+```
+
+_See code: [src/commands/publish/deb.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/publish/deb.ts)_
+
+## `oclif-dev publish:macos`
+
+publish macos installers built with pack:macos
+
+```
+USAGE
+  $ oclif-dev publish:macos
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+```
+
+_See code: [src/commands/publish/macos.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/publish/macos.ts)_
+
+## `oclif-dev publish:win`
+
+publish windows installers built with pack:win
+
+```
+USAGE
+  $ oclif-dev publish:win
+
+OPTIONS
+  -r, --root=root  (required) [default: .] path to oclif CLI root
+```
+
+_See code: [src/commands/publish/win.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/publish/win.ts)_
+
+## `oclif-dev readme`
+
+adds commands to README.md in current directory
+
+```
+USAGE
+  $ oclif-dev readme
+
+OPTIONS
+  --dir=dir   (required) [default: docs] output directory for multi docs
+  --multi     create a different markdown page for each topic
+  --spaceSep  output space separated commands on docs
+
+DESCRIPTION
+  The readme must have any of the following tags inside of it for it to be replaced or else it will do nothing:
+  # Usage
+  <!-- usage -->
+  # Commands
+  <!-- commands -->
+
+  Customize the code URL prefix by setting oclif.repositoryPrefix in package.json.
+```
+
+_See code: [src/commands/readme.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.1/src/commands/readme.ts)_
+
+## `oclif-dev update [CHANNEL]`
+
+update the oclif-dev CLI
+
+```
+USAGE
+  $ oclif-dev update [CHANNEL]
 ```
 
 _See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.9/src/commands/update.ts)_
