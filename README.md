@@ -38,6 +38,8 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`oclif-dev changelog:get-tag`](#oclif-dev-changelogget-tag)
+* [`oclif-dev changelog:init`](#oclif-dev-changeloginit)
 * [`oclif-dev help [COMMAND]`](#oclif-dev-help-command)
 * [`oclif-dev manifest [PATH]`](#oclif-dev-manifest-path)
 * [`oclif-dev pack`](#oclif-dev-pack)
@@ -49,6 +51,32 @@ USAGE
 * [`oclif-dev publish:macos`](#oclif-dev-publishmacos)
 * [`oclif-dev publish:win`](#oclif-dev-publishwin)
 * [`oclif-dev readme`](#oclif-dev-readme)
+
+## `oclif-dev changelog:get-tag`
+
+Outputs the content of a tag to stdout
+
+```
+USAGE
+  $ oclif-dev changelog:get-tag
+
+OPTIONS
+  -p, --path=path  [default: ./CHANGELOG.md] path to changelog
+  -t, --tag=tag    (required) desired tag
+```
+
+_See code: [src/commands/changelog/get-tag.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/changelog/get-tag.ts)_
+
+## `oclif-dev changelog:init`
+
+Initializes a changelog on the current directory
+
+```
+USAGE
+  $ oclif-dev changelog:init
+```
+
+_See code: [src/commands/changelog/init.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/changelog/init.ts)_
 
 ## `oclif-dev help [COMMAND]`
 

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Get version changes Version 0.0.1 1`] = `
+Array [
+  "## [0.0.1] - 2019-06-19",
+  "",
+  "- First release",
+  "",
+  "",
+]
+`;
+
+exports[`Get version changes Version 0.1.0 1`] = `
+Array [
+  "## [0.1.0] - 2019-06-19",
+  "### Added",
+  "",
+  "- Testing",
+  "",
+  "### Fixed",
+  "",
+  "- Fixing some bug",
+  "",
+  "",
+]
+`;
+
+exports[`Get version changes Version 0.1.0-beta.0 1`] = `
+Array [
+  "## [0.1.0-beta.0] - 2019-06-19",
+  "",
+  "- First beta",
+  "",
+  "",
+]
+`;
