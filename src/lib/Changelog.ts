@@ -1,8 +1,10 @@
 import * as findVersions from 'find-versions'
-import { readFile, writeFile } from 'fs-extra'
+import { readFile, writeFile, pathExists } from 'fs-extra'
 import * as marked from 'marked'
 import * as mdRenderer from 'marked-to-md'
 import * as semver from 'semver'
+
+export class ChangelogNotFound extends Error {}
 
 const isVersionToken = (token: marked.Token): boolean => {
   return token.type === 'heading' && token.depth === 2
@@ -34,6 +36,10 @@ const getVersionFromTitle = (title: string) => {
 
 export class Changelog {
   public static async getChangelog(path: string) {
+    if (!(await pathExists(path))) {
+      throw new ChangelogNotFound(`CHANGELOG.md not found at ${path}`)
+    }
+
     const changelog = new Changelog(path)
     await changelog.init()
     return changelog
@@ -83,5 +89,50 @@ export class Changelog {
     })
 
     return versionContent
+  }
+
+  public getMostRecentVersion() {
+    for (const token of this.tokens) {
+      if (isVersionToken(token)) {
+        const version = getVersionFromTitle(token.text)?.version
+        if (version) {
+          return version
+        }
+      }
+    }
+
+    return null
+  }
+
+  public getUnreleasedPositions() {
+    const mostRecentVersion = this.getMostRecentVersion()
+    const ini = this.content.indexOf('[Unreleased]') - 3
+    const end = mostRecentVersion == null ? this.content.length : this.content.indexOf(`[${mostRecentVersion}]`) - 4
+    return { ini, end }
+  }
+
+  public getContentAfterNewRelease(newVersion: string, date: Date) {
+    const { ini, end } = this.getUnreleasedPositions()
+    let newVersionContent = this.content.substring(ini, end)
+
+    const dateFormat = [
+      date.getFullYear(),
+      ('0' + (date.getMonth() + 1)).slice(-2),
+      ('0' + date.getDate()).slice(-2),
+    ].join('-')
+
+    newVersionContent = newVersionContent.replace('## [Unreleased]', '')
+    newVersionContent = newVersionContent.trim()
+    newVersionContent =
+      `## [${newVersion}] - ${dateFormat}\n\n` + newVersionContent + (newVersionContent.length > 0 ? '\n\n' : '')
+
+    const newContent =
+      this.content.substring(0, ini) + '## [Unreleased]\n\n' + newVersionContent + this.content.substring(end).trimLeft()
+    return newContent
+  }
+
+  public releaseNewVersion(newVersion: string) {
+    this.content = this.getContentAfterNewRelease(newVersion, new Date())
+    return this.flush()
   }
 }

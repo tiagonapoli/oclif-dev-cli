@@ -29,7 +29,7 @@ $ npm install -g @tiagonapoli/oclif-dev-cli
 $ oclif-dev COMMAND
 running command...
 $ oclif-dev (-v|--version|version)
-@tiagonapoli/oclif-dev-cli/0.0.3 linux-x64 node-v12.13.0
+@tiagonapoli/oclif-dev-cli/0.0.4 linux-x64 node-v12.13.0
 $ oclif-dev --help [COMMAND]
 USAGE
   $ oclif-dev COMMAND
@@ -65,7 +65,7 @@ OPTIONS
   -t, --tag=tag    (required) desired tag
 ```
 
-_See code: [src/commands/changelog/get-tag.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/changelog/get-tag.ts)_
+_See code: [src/commands/changelog/get-tag.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/changelog/get-tag.ts)_
 
 ## `oclif-dev changelog:init`
 
@@ -76,7 +76,7 @@ USAGE
   $ oclif-dev changelog:init
 ```
 
-_See code: [src/commands/changelog/init.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/changelog/init.ts)_
+_See code: [src/commands/changelog/init.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/changelog/init.ts)_
 
 ## `oclif-dev help [COMMAND]`
 
@@ -107,7 +107,7 @@ ARGUMENTS
   PATH  [default: .] path to plugin
 ```
 
-_See code: [src/commands/manifest.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/manifest.ts)_
+_See code: [src/commands/manifest.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/manifest.ts)_
 
 ## `oclif-dev pack`
 
@@ -126,7 +126,7 @@ DESCRIPTION
   This can be used to create oclif CLIs that use the system node or that come preloaded with a node binary.
 ```
 
-_See code: [src/commands/pack/index.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/pack/index.ts)_
+_See code: [src/commands/pack/index.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/pack/index.ts)_
 
 ## `oclif-dev pack:deb`
 
@@ -140,7 +140,7 @@ OPTIONS
   -r, --root=root  (required) [default: .] path to oclif CLI root
 ```
 
-_See code: [src/commands/pack/deb.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/pack/deb.ts)_
+_See code: [src/commands/pack/deb.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/pack/deb.ts)_
 
 ## `oclif-dev pack:macos`
 
@@ -154,7 +154,7 @@ OPTIONS
   -r, --root=root  (required) [default: .] path to oclif CLI root
 ```
 
-_See code: [src/commands/pack/macos.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/pack/macos.ts)_
+_See code: [src/commands/pack/macos.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/pack/macos.ts)_
 
 ## `oclif-dev pack:win`
 
@@ -168,7 +168,7 @@ OPTIONS
   -r, --root=root  (required) [default: .] path to oclif CLI root
 ```
 
-_See code: [src/commands/pack/win.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/pack/win.ts)_
+_See code: [src/commands/pack/win.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/pack/win.ts)_
 
 ## `oclif-dev publish`
 
@@ -185,7 +185,7 @@ DESCRIPTION
   "aws-sdk" will need to be installed as a devDependency to publish.
 ```
 
-_See code: [src/commands/publish/index.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/publish/index.ts)_
+_See code: [src/commands/publish/index.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/publish/index.ts)_
 
 ## `oclif-dev publish:deb`
 
@@ -199,7 +199,7 @@ OPTIONS
   -r, --root=root  (required) [default: .] path to oclif CLI root
 ```
 
-_See code: [src/commands/publish/deb.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/publish/deb.ts)_
+_See code: [src/commands/publish/deb.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/publish/deb.ts)_
 
 ## `oclif-dev publish:macos`
 
@@ -213,7 +213,7 @@ OPTIONS
   -r, --root=root  (required) [default: .] path to oclif CLI root
 ```
 
-_See code: [src/commands/publish/macos.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/publish/macos.ts)_
+_See code: [src/commands/publish/macos.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/publish/macos.ts)_
 
 ## `oclif-dev publish:win`
 
@@ -227,7 +227,7 @@ OPTIONS
   -r, --root=root  (required) [default: .] path to oclif CLI root
 ```
 
-_See code: [src/commands/publish/win.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/publish/win.ts)_
+_See code: [src/commands/publish/win.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/publish/win.ts)_
 
 ## `oclif-dev readme`
 
@@ -252,5 +252,5 @@ DESCRIPTION
   Customize the code URL prefix by setting oclif.repositoryPrefix in package.json.
 ```
 
-_See code: [src/commands/readme.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.3/src/commands/readme.ts)_
+_See code: [src/commands/readme.ts](https://github.com/tiagonapoli/oclif-dev-cli/blob/v0.0.4/src/commands/readme.ts)_
 <!-- commandsstop -->
