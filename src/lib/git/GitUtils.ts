@@ -59,7 +59,7 @@ export class GitUtils {
     })
   }
 
-  public static gitPush(tagName: string, root: string, logger?: any) {
+  public static gitPush(tagName: string, root: string, logger: any) {
     return runCommand(`git push && git push origin ${tagName}`, root, 'Pushed commit and tags', {
       hideOutput: true,
       retries: 2,

@@ -47,7 +47,7 @@ export class GitRelease {
   public release() {
     this.addAndCommitTagFiles()
     GitUtils.gitTag(this.tagName, `Release ${this.tagName}`, this.root, this.logger)
-    GitUtils.gitPush(this.tagName, this.root)
+    GitUtils.gitPush(this.tagName, this.root, this.logger)
   }
 
   public createReleaseNote() {}
