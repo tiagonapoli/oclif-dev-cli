@@ -31,6 +31,7 @@ export class GitRelease {
   private addAndCommitTagFiles() {
     const files = [this.versionFile]
     if (!this.changelogPath) {
+      console.log('CHANGELOG', this.changelogPath)
       files.push(this.changelogPath)
     }
 
