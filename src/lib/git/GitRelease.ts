@@ -4,6 +4,7 @@ interface GitReleaseArgs {
   root: string
   tagName: string
   versionFile: string
+  logger: any
   isPrerelease?: boolean
   changelogPath?: string
 }
@@ -14,8 +15,9 @@ export class GitRelease {
   private root: string
   private tagName: string
   private isPrerelease: boolean
+  private logger: any
 
-  constructor(args: GitReleaseArgs) {
+  constructor(args: GitReleaseArgs,) {
     const mergedArgs = {
       isPrerelease: false,
       ...args,
@@ -24,6 +26,7 @@ export class GitRelease {
     this.versionFile = mergedArgs.versionFile
     this.changelogPath = mergedArgs.changelogPath
     this.root = mergedArgs.root
+    this.logger = mergedArgs.logger
     this.tagName = mergedArgs.tagName
     this.isPrerelease = mergedArgs.isPrerelease
   }
@@ -36,14 +39,14 @@ export class GitRelease {
     }
 
     console.log(files)
-    GitUtils.gitAddFiles(files, this.root)
+    GitUtils.gitAddFiles(files, this.root, this.logger)
     const commitMessage = `${this.isPrerelease ? 'Prerelease' : 'Release'} ${this.tagName}`
-    GitUtils.gitCommit(commitMessage, this.root)
+    GitUtils.gitCommit(commitMessage, this.root, this.logger)
   }
 
   public release() {
     this.addAndCommitTagFiles()
-    GitUtils.gitTag(this.tagName, `Release ${this.tagName}`, this.root)
+    GitUtils.gitTag(this.tagName, `Release ${this.tagName}`, this.root, this.logger)
     GitUtils.gitPush(this.tagName, this.root)
   }
 
