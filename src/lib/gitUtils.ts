@@ -16,7 +16,9 @@ const runCommand = (
 
   for (let i = 0; i <= retries; i += 1) {
     try {
-      const { stdout: output } = execa.sync(cmd, { stdio: hideOutput ? 'pipe' : 'inherit', cwd })
+      const [bin, ...args] = cmd.split(' ')
+      console.log(bin, args)
+      const { stdout: output } = execa.sync(bin, args, { stdio: hideOutput ? 'pipe' : 'inherit', cwd })
       if (!hideSuccessMessage) {
         logger?.info(successMessage + chalk.blue(` >  ${cmd}`))
       }
@@ -39,6 +41,15 @@ export class NotGitRepoException extends Error {
     super(`The path ${root} is not a Git repository`)
   }
 }
+
+interface GitReleaseArgs {
+  root: string
+  tagName: string
+  versionFile: string
+  isPrerelease?: boolean
+  changelogPath?: string
+}
+
 export class GitRelease {
   private static gitAddFiles(files: string[], root: string) {
     const filesStr = files.map(filePath => `"${filePath}"`).join(' ')
@@ -66,9 +77,10 @@ export class GitRelease {
 
   private static isGitRepo(root: string) {
     try {
-      execa.sync('git reslackv-parse --git-dir', { cwd: root })
+      execa.sync('git', ['rev-parse', '--git-dir'], { cwd: root })
       return true
     } catch (e) {
+      console.log(e)
       return false
     }
   }
@@ -89,17 +101,30 @@ export class GitRelease {
   private versionFile: string
   private changelogPath?: string
   private root: string
+  private tagName: string
+  private isPrerelease: boolean
 
-  constructor(private tagName: string, private releaseType: 'prerelease' | 'release') {}
+  constructor(args: GitReleaseArgs) {
+    const mergedArgs = {
+      isPrerelease: false,
+      ...args,
+    }
 
-  public addAndCommitTagFiles() {
+    this.versionFile = mergedArgs.versionFile
+    this.changelogPath = mergedArgs.changelogPath
+    this.root = mergedArgs.root
+    this.tagName = mergedArgs.tagName
+    this.isPrerelease = mergedArgs.isPrerelease
+  }
+
+  private addAndCommitTagFiles() {
     const files = [this.versionFile]
     if (!this.changelogPath) {
       files.push(this.changelogPath)
     }
 
     GitRelease.gitAddFiles(files, this.root)
-    const commitMessage = `${this.releaseType === 'release' ? 'Release' : 'Prerelease'} ${this.tagName}`
+    const commitMessage = `${this.isPrerelease ? 'Prerelease' : 'Release'} ${this.tagName}`
     GitRelease.gitCommit(commitMessage, this.root)
   }
 
@@ -117,4 +142,6 @@ export class GitRelease {
     GitRelease.gitTag(this.tagName, `Release ${this.tagName}`, this.root)
     GitRelease.gitPush(this.tagName, this.root)
   }
+
+  public createReleaseNote() {}
 }

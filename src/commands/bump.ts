@@ -1,10 +1,12 @@
 import { Command, flags } from '@oclif/command'
 import * as Parser from '@oclif/parser'
-import { prompt } from 'inquirer'
-import { PackageJson, ReleaseType } from '../lib/PackageJson'
-import { Changelog, ChangelogNotFound } from '../lib/Changelog'
-import { dirname, join } from 'path'
 import * as chalk from 'chalk'
+import { pathExists } from 'fs-extra'
+import { prompt } from 'inquirer'
+import { dirname, join } from 'path'
+import { Changelog, ChangelogNotFound } from '../lib/Changelog'
+import { GitRelease } from '../lib/gitUtils'
+import { PackageJson, ReleaseType } from '../lib/PackageJson'
 
 const boolToInt = (val: boolean) => {
   return val ? 1 : 0
@@ -47,7 +49,7 @@ export default class Version extends Command {
       type = 'prerelease'
     }
 
-    return { type, stable: flags.stable }
+    return { type }
   }
 
   private static async bumpPackageJsonVersion(type: ReleaseType, stable: boolean) {
@@ -77,7 +79,25 @@ export default class Version extends Command {
     }
   }
 
-  private static createGitTag() {}
+  private static async createGitTag(newVersion: string, packageJsonPath: string, stable: boolean) {
+    const root = process.cwd()
+    const changelogPath = join(dirname(packageJsonPath), 'CHANGELOG.md')
+
+    const releaser = new GitRelease({
+      root,
+      tagName: `v${newVersion}`,
+      versionFile: packageJsonPath,
+      isPrerelease: !stable,
+      ...((await pathExists(changelogPath)) ? { changelogPath } : {}),
+    })
+
+    try {
+      releaser.release()
+    } catch (err) {
+      console.error(err.message)
+      process.exit(1)
+    }
+  }
 
   private static async updateChangelog(newVersion: string, packageJsonPath: string) {
     try {
@@ -104,11 +124,15 @@ export default class Version extends Command {
 
   async run() {
     const { flags } = this.parse(Version)
-    const { type, stable } = Version.checkFlagsValidity(flags)
+    const stable = flags.stable
+
+    const { type } = Version.checkFlagsValidity(flags)
     const { newVersion, pkgPath } = await Version.bumpPackageJsonVersion(type, stable)
 
     if (!flags['no-changelog'] && !flags.prerelease && flags.stable) {
       await Version.updateChangelog(newVersion, pkgPath)
     }
+
+    Version.createGitTag(newVersion, pkgPath, stable)
   }
 }
