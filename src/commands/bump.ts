@@ -85,6 +85,7 @@ export default class Bump extends Command {
 
     const releaser = new GitRelease({
       root,
+      logger: console,
       tagName: `v${newVersion}`,
       versionFile: packageJsonPath,
       isPrerelease: !stable,
