@@ -23,7 +23,7 @@
     "oclif-dev": "./bin/run"
   },
   "scripts": {
-    "watch": "nodemon",
+    "watch": "bash ./scripts/symlink.sh && yarn nodemon",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint . --ext .ts --config .eslintrc",
     "format-lint": "yarn format && yarn lint",
