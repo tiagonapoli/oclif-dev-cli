@@ -5,14 +5,14 @@ import { pathExists } from 'fs-extra'
 import { prompt } from 'inquirer'
 import { dirname, join } from 'path'
 import { Changelog, ChangelogNotFound } from '../lib/Changelog'
-import { GitRelease } from '../lib/gitUtils'
+import { GitRelease, GitUtils } from '../lib/git'
 import { PackageJson, ReleaseType } from '../lib/PackageJson'
 
 const boolToInt = (val: boolean) => {
   return val ? 1 : 0
 }
 
-export default class Version extends Command {
+export default class Bump extends Command {
   static description = 'Bumps version and updates changelog'
 
   static flags = {
@@ -24,7 +24,7 @@ export default class Version extends Command {
     stable: flags.boolean({ description: 'Create a new stable', default: false }),
   }
 
-  private static checkFlagsValidity(flags: Parser.OutputFlags<typeof Version.flags>) {
+  private static checkFlagsValidity(flags: Parser.OutputFlags<typeof Bump.flags>) {
     const count = boolToInt(flags.major) + boolToInt(flags.minor) + boolToInt(flags.patch) + boolToInt(flags.prerelease)
     if (count === 0) {
       throw new Error('You need to select one bump type: major, minor, patch or prerelease')
@@ -122,17 +122,31 @@ export default class Version extends Command {
     }
   }
 
-  async run() {
-    const { flags } = this.parse(Version)
-    const stable = flags.stable
-
-    const { type } = Version.checkFlagsValidity(flags)
-    const { newVersion, pkgPath } = await Version.bumpPackageJsonVersion(type, stable)
-
-    if (!flags['no-changelog'] && !flags.prerelease && flags.stable) {
-      await Version.updateChangelog(newVersion, pkgPath)
+  private static preChecks(root: string) {
+    if (!GitUtils.isGitRepo(root)) {
+      console.error(chalk.bold.red('The current directory is not a git repository.'))
+      process.exit(1)
     }
 
-    Version.createGitTag(newVersion, pkgPath, stable)
+    if (GitUtils.hasUncommitedChanges(root)) {
+      console.error(chalk.bold.red('Please commit your changes before proceeding.'))
+      process.exit(1)
+    }
+  }
+
+  async run() {
+    const { flags } = this.parse(Bump)
+    const stable = flags.stable
+    const root = process.cwd()
+
+    Bump.preChecks(root)
+    const { type } = Bump.checkFlagsValidity(flags)
+    const { newVersion, pkgPath } = await Bump.bumpPackageJsonVersion(type, stable)
+
+    if (!flags['no-changelog'] && !flags.prerelease && flags.stable) {
+      await Bump.updateChangelog(newVersion, pkgPath)
+    }
+
+    Bump.createGitTag(newVersion, pkgPath, stable)
   }
 }
