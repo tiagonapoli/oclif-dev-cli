@@ -44,23 +44,23 @@ export class GitUtils {
   public static gitAddFiles(files: string[], root: string, logger: any) {
     const filesStr = files.map(filePath => `"${filePath}"`).join(' ')
     const gitAddCommand = `git add ${filesStr}`
-    const successMessage = `Added files: ${filesStr}`
+    const successMessage = `> Added files: ${filesStr}`
     return runCommand(gitAddCommand, root, successMessage, { hideOutput: false, logger })
   }
 
   public static gitCommit(commitMessage: string, root: string, logger: any) {
-    return runCommand(`git commit -m "${commitMessage}"`, root, 'Commited files', { hideOutput: true, logger })
+    return runCommand(`git commit -m "${commitMessage}"`, root, '> Commited files', { hideOutput: true, logger })
   }
 
   public static gitTag(tagName: string, tagMessage: string, root: string, logger: any) {
-    return runCommand(`git tag ${tagName} -m "${tagMessage}"`, root, `Tag created: ${tagName}`, {
+    return runCommand(`git tag ${tagName} -m "${tagMessage}"`, root, `> Tag created: ${tagName}`, {
       hideOutput: true,
       logger
     })
   }
 
   public static gitPush(tagName: string, root: string, logger: any) {
-    return runCommand(`git push && git push origin ${tagName}`, root, 'Pushed commit and tags', {
+    return runCommand(`git push && git push origin ${tagName}`, root, '> Pushed commit and tags', {
       hideOutput: true,
       retries: 2,
       logger
