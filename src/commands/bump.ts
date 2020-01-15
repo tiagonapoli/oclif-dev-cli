@@ -82,7 +82,6 @@ export default class Bump extends Command {
   private static async createGitTag(newVersion: string, packageJsonPath: string, stable: boolean) {
     const root = process.cwd()
     const changelogPath = join(dirname(packageJsonPath), 'CHANGELOG.md')
-    console.log(changelogPath, pathExistsSync(changelogPath))
 
     const releaser = new GitRelease({
       root,
