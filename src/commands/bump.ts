@@ -1,7 +1,7 @@
 import { Command, flags } from '@oclif/command'
 import * as Parser from '@oclif/parser'
 import * as chalk from 'chalk'
-import { pathExists } from 'fs-extra'
+import { pathExists, pathExistsSync } from 'fs-extra'
 import { prompt } from 'inquirer'
 import { dirname, join } from 'path'
 import { Changelog, ChangelogNotFound } from '../lib/Changelog'
@@ -82,6 +82,7 @@ export default class Bump extends Command {
   private static async createGitTag(newVersion: string, packageJsonPath: string, stable: boolean) {
     const root = process.cwd()
     const changelogPath = join(dirname(packageJsonPath), 'CHANGELOG.md')
+    console.log(changelogPath, pathExistsSync(changelogPath))
 
     const releaser = new GitRelease({
       root,
