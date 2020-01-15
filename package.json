@@ -1,7 +1,7 @@
 {
   "name": "@tiagonapoli/oclif-dev-cli",
   "description": "CLI for development tasks when using OCLIF",
-  "version": "0.0.4-beta.9",
+  "version": "0.0.4-beta.10",
   "author": "tiagonapoli",
   "homepage": "https://github.com/tiagonapoli/oclif-dev-cli",
   "bugs": "https://github.com/tiagonapoli/oclif-dev-cli/issues",
