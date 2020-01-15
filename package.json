@@ -32,7 +32,8 @@
     "prepack": "rm -rf lib && tsc && oclif-dev manifest && oclif-dev readme",
     "version": "oclif-dev readme && git add README.md",
     "test": "jest --passWithNoTests",
-    "ci:test": "yarn test --ci"
+    "ci:test": "yarn test --ci",
+    "create-link": "bash ./scripts/symlink.sh"
   },
   "dependencies": {
     "@oclif/command": "^1.0.0",
@@ -84,6 +85,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-lodash": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "execa": "^4.0.0",
     "globby": "^10.0.0",
     "jest": "^24.9.0",
     "nodemon": "^2.0.2",
