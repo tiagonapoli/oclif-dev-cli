@@ -30,7 +30,7 @@ export class GitRelease {
 
   private addAndCommitTagFiles() {
     const files = [this.versionFile]
-    if (!this.changelogPath) {
+    if (this.changelogPath) {
       console.log('CHANGELOG', this.changelogPath)
       files.push(this.changelogPath)
     }
@@ -42,7 +42,6 @@ export class GitRelease {
   }
 
   public release() {
-    GitUtils.maybeTriggerGitPushError(this.root)
     this.addAndCommitTagFiles()
     GitUtils.gitTag(this.tagName, `Release ${this.tagName}`, this.root)
     GitUtils.gitPush(this.tagName, this.root)
