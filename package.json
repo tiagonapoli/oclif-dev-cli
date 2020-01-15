@@ -1,7 +1,7 @@
 {
   "name": "@tiagonapoli/oclif-dev-cli",
   "description": "CLI for development tasks when using OCLIF",
-  "version": "0.0.4",
+  "version": "0.0.4-beta.11",
   "author": "tiagonapoli",
   "homepage": "https://github.com/tiagonapoli/oclif-dev-cli",
   "bugs": "https://github.com/tiagonapoli/oclif-dev-cli/issues",
@@ -23,7 +23,7 @@
     "oclif-dev": "./bin/run"
   },
   "scripts": {
-    "watch": "nodemon",
+    "watch": "bash ./scripts/symlink.sh && yarn nodemon",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint . --ext .ts --config .eslintrc",
     "format-lint": "yarn format && yarn lint",
@@ -32,7 +32,8 @@
     "prepack": "rm -rf lib && tsc && oclif-dev manifest && oclif-dev readme",
     "version": "oclif-dev readme && git add README.md",
     "test": "jest --passWithNoTests",
-    "ci:test": "yarn test --ci"
+    "ci:test": "yarn test --ci",
+    "create-link": "bash ./scripts/symlink.sh"
   },
   "dependencies": {
     "@oclif/command": "^1.0.0",
@@ -45,6 +46,7 @@
     "find-versions": "^3.2.0",
     "fs-extra": "^7.0.1",
     "github-slugger": "^1.2.1",
+    "inquirer": "^7.0.2",
     "lodash": "^4.17.11",
     "marked": "^0.8.0",
     "marked-to-md": "^1.0.1",
@@ -61,6 +63,7 @@
     "@types/execa": "^0.9.0",
     "@types/find-versions": "^3.1.0",
     "@types/fs-extra": "^5.0.5",
+    "@types/inquirer": "^6.5.0",
     "@types/jest": "^24.0.25",
     "@types/lodash": "^4.14.123",
     "@types/lodash.template": "^4.4.6",
