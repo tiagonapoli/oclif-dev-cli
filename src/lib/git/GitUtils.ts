@@ -1,5 +1,5 @@
 import * as chalk from 'chalk'
-import * as execa from 'execa'
+import { execSync } from 'child_process'
 
 const runCommand = (
   cmd: string,
@@ -16,14 +16,12 @@ const runCommand = (
 
   for (let i = 0; i <= retries; i += 1) {
     try {
-      const [bin, ...args] = cmd.split(' ')
-      console.log(bin, args)
-      const { stdout: output } = execa.sync(bin, args, { stdio: hideOutput ? 'pipe' : 'inherit', cwd })
+      const output = execSync(cmd, { stdio: hideOutput ? 'pipe' : 'inherit', cwd })
       if (!hideSuccessMessage) {
         logger?.info(successMessage + chalk.blue(` >  ${cmd}`))
       }
 
-      return output
+      return output?.toString('utf8') || ''
     } catch (e) {
       logger?.error(`Command '${cmd}' exited with error code: ${e.status}`)
       if (i === retries) {
@@ -47,11 +45,11 @@ export class GitUtils {
     const filesStr = files.map(filePath => `"${filePath}"`).join(' ')
     const gitAddCommand = `git add ${filesStr}`
     const successMessage = `Added files: ${filesStr}`
-    return runCommand(gitAddCommand, root, successMessage, { hideOutput: true })
+    return runCommand(gitAddCommand, root, successMessage, { hideOutput: false })
   }
 
   public static gitCommit(commitMessage: string, root: string) {
-    return runCommand(`git commit -m "${commitMessage}`, root, 'Commited files', { hideOutput: true })
+    return runCommand(`git commit -m "${commitMessage}"`, root, 'Commited files', { hideOutput: true })
   }
 
   public static gitTag(tagName: string, tagMessage: string, root: string) {
@@ -69,10 +67,9 @@ export class GitUtils {
 
   public static isGitRepo(root: string) {
     try {
-      execa.sync('git', ['rev-parse', '--git-dir'], { cwd: root })
+      execSync('git rev-parse --git-dir', { cwd: root })
       return true
     } catch (e) {
-      console.log(e)
       return false
     }
   }
@@ -89,6 +86,4 @@ export class GitUtils {
     const response = this.gitStatus(root)
     return !/nothing to commit/.test(response)
   }
-
-  
 }

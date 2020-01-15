@@ -1,4 +1,4 @@
-import { GitUtils, NotGitRepoException } from './GitUtils'
+import { GitUtils } from './GitUtils'
 
 interface GitReleaseArgs {
   root: string
