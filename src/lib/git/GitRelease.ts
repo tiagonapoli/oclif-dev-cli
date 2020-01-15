@@ -40,14 +40,6 @@ export class GitRelease {
   }
 
   public release() {
-    if (!GitUtils.isGitRepo(this.root)) {
-      throw new NotGitRepoException(this.root)
-    }
-
-    if (GitUtils.hasUncommitedChanges(this.root)) {
-      throw new Error('Please commit your changes before proceeding.')
-    }
-
     GitUtils.maybeTriggerGitPushError(this.root)
     this.addAndCommitTagFiles()
     GitUtils.gitTag(this.tagName, `Release ${this.tagName}`, this.root)
