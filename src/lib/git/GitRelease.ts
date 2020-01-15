@@ -34,6 +34,7 @@ export class GitRelease {
       files.push(this.changelogPath)
     }
 
+    console.log(files)
     GitUtils.gitAddFiles(files, this.root)
     const commitMessage = `${this.isPrerelease ? 'Prerelease' : 'Release'} ${this.tagName}`
     GitUtils.gitCommit(commitMessage, this.root)
