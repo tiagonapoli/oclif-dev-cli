@@ -35,5 +35,5 @@ jobs:
       - run: yarn install --ignore-scripts
       - run: yarn prepack
       - run: npm publish
-      env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        env:
+            NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
