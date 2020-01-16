@@ -23,11 +23,17 @@ jobs:
       - run: yarn install --ignore-scripts
       - run: yarn run ci:test
 
-  npm-publish:
+    npm-publish:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
       - run: yarn install --ignore-scripts
       - run: yarn prepack
       - run: npm publish
+      env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
