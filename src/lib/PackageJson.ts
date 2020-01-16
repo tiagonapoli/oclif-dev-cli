@@ -41,6 +41,10 @@ export class PackageJson {
     return base
   }
 
+  public static getProjectRoot() {
+    return PackageJson.findProjectRoot(process.cwd())
+  }
+
   public static async getProjectPackageJson(logger: any) {
     const root = await PackageJson.findProjectRoot(process.cwd())
     const pkg = new PackageJson(join(root, 'package.json'), logger)
