@@ -101,36 +101,35 @@ export default class Bump extends Command {
   }
 
   private static async updateChangelog(newVersion: string, packageJsonPath: string) {
-    try {
-      const changelogPath = join(dirname(packageJsonPath), 'CHANGELOG.md')
-      const ch = await Changelog.getChangelog(changelogPath)
-      console.log('> Updating CHANGELOG.md')
-      await ch.releaseNewVersion(newVersion)
-    } catch (err) {
-      if (err instanceof ChangelogNotFound) {
-        console.error(
-          chalk.red(
-            [
-              'Changelog not found!',
-              "If you already have one please run 'oclif-dev bump' on the project root. Make sure that CHANGELOG.md is on the project root as well.",
-              "You can create a new changelog with 'oclif-dev changelog:init'.",
-            ].join('\n')
-          )
-        )
-      }
-
-      process.exit(1)
-    }
+    const changelogPath = join(dirname(packageJsonPath), 'CHANGELOG.md')
+    const ch = await Changelog.getChangelog(changelogPath)
+    console.log('> Updating CHANGELOG.md')
+    await ch.releaseNewVersion(newVersion)
   }
 
-  private static preChecks(root: string) {
-    if (!GitUtils.isGitRepo(root)) {
+  private static async preChecks(cwd: string, noChangelog: boolean) {
+    if (!GitUtils.isGitRepo(cwd)) {
       console.error(chalk.bold.red('The current directory is not a git repository.'))
       process.exit(1)
     }
 
-    if (GitUtils.hasUncommitedChanges(root)) {
+    if (GitUtils.hasUncommitedChanges(cwd)) {
       console.error(chalk.bold.red('Please commit your changes before proceeding.'))
+      process.exit(1)
+    }
+
+    const root = await PackageJson.getProjectRoot()
+    const changelogPath = join(root, 'CHANGELOG.md')
+    if (!noChangelog && !(await pathExists(changelogPath))) {
+      console.error(
+        chalk.red(
+          [
+            'Changelog not found!',
+            "If you already have one please run 'oclif-dev bump' on the project root. Make sure that CHANGELOG.md is on the project root as well.",
+            "You can create a new changelog with 'oclif-dev changelog:init'.",
+          ].join('\n')
+        )
+      )
       process.exit(1)
     }
   }
@@ -140,7 +139,7 @@ export default class Bump extends Command {
     const stable = flags.stable
     const root = process.cwd()
 
-    Bump.preChecks(root)
+    Bump.preChecks(root, flags['no-changelog'])
     const { type } = Bump.checkFlagsValidity(flags)
     const { newVersion, pkgPath } = await Bump.bumpPackageJsonVersion(type, stable)
 
