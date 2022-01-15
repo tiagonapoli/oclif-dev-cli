@@ -48,7 +48,7 @@
     "github-slugger": "^1.2.1",
     "inquirer": "^7.0.2",
     "lodash": "^4.17.11",
-    "marked": "^0.8.0",
+    "marked": "^4.0.10",
     "marked-to-md": "^1.0.1",
     "normalize-package-data": "^2.5.0",
     "qqjs": "^0.3.10",
